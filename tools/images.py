@@ -104,6 +104,32 @@ def _charge_image(cfg, episode: dict) -> None:
                                         "prune", 0, 0, cfg["pricing"]["image_each"])
 
 
+def wrap_px(text: str, fnt: ImageFont.FreeTypeFont, max_w: int) -> list[str]:
+    """Wrap text so every line fits in max_w pixels."""
+    lines, cur = [], ""
+    for word in text.split():
+        trial = (cur + " " + word).strip()
+        if fnt.getlength(trial) <= max_w or not cur:
+            cur = trial
+        else:
+            lines.append(cur)
+            cur = word
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def fit(text: str, max_w: int, max_lines: int, sizes: list[int], bold: bool = True):
+    """Largest font size whose wrapped text fits in max_lines lines of max_w pixels."""
+    for size in sizes:
+        f = font(size, bold)
+        lines = wrap_px(text, f, max_w)
+        if len(lines) <= max_lines and all(f.getlength(l) <= max_w for l in lines):
+            return f, lines
+    f = font(sizes[-1], bold)
+    return f, wrap_px(text, f, max_w)[:max_lines]
+
+
 def _outlined(d: ImageDraw.ImageDraw, xy, text, fnt, fill, outline=(0, 0, 0), width=4):
     x, y = xy
     for dx in range(-width, width + 1, 2):
@@ -122,15 +148,16 @@ def make_thumbnail(cfg, thumbnail: dict, path: Path) -> None:
         md.line([(x, 0), (x, art.size[1])], fill=int(255 * x / 200))
     img.paste(art, (W - 620, 0), mask)
     d = ImageDraw.Draw(img)
-    words = thumbnail["text"].upper().split()
-    lines = textwrap.wrap(" ".join(words), 12) or [""]
-    size = 120 if len(lines) <= 2 else 92
-    y = H // 2 - len(lines) * size // 2 - 20
+    fnt, lines = fit(thumbnail["text"].upper(), 620, 3, [130, 118, 104, 92, 80, 70])
+    size = fnt.size
+    y = H // 2 - len(lines) * (size + 10) // 2 - 30
     for i, line in enumerate(lines):
-        _outlined(d, (60, y), line, font(size, True), AMBER if i == len(lines) - 1 else WHITE)
+        _outlined(d, (60, y), line, fnt, AMBER if i == len(lines) - 1 else WHITE)
         y += size + 10
-    d.rectangle([60, H - 110, 60 + 330, H - 62], fill=TEAL)
-    d.text((76, H - 104), "PROFESSOR EXPLAINS", font=font(26, True), fill=NAVY)
+    badge = font(26, True)
+    label = "PROFESSOR EXPLAINS"
+    d.rectangle([60, H - 110, 60 + 32 + badge.getlength(label), H - 62], fill=TEAL)
+    d.text((76, H - 104), label, font=badge, fill=NAVY)
     if cfg.backends["images"] == "mock":
         d.text((W - 300, H - 32), "PLACEHOLDER THUMBNAIL", font=font(16, True), fill=GREY)
     img.save(path)
@@ -148,15 +175,17 @@ def make_slide(cfg, scene: dict, art_path: str | None, index: int, total: int, c
         img.paste(art, (W - 560 - 50, 110))
     d.text((60, 70), f"{index}/{total}", font=font(22, True), fill=TEAL)
     y = 110
-    for line in textwrap.wrap(scene["heading"], 22)[:3]:
-        d.text((60, y), line, font=font(50, True), fill=WHITE)
-        y += 62
+    hf, hlines = fit(scene["heading"], 560, 3, [52, 46, 40, 36])
+    for line in hlines:
+        d.text((60, y), line, font=hf, fill=WHITE)
+        y += hf.size + 12
     y += 24
-    d.rectangle([60, y, 66, y + 110], fill=AMBER)
+    of, olines = fit(scene["on_screen_text"], 520, 3, [34, 30, 26], bold=False)
+    d.rectangle([60, y, 66, y + len(olines) * (of.size + 10) + 6], fill=AMBER)
     yy = y + 4
-    for line in textwrap.wrap(scene["on_screen_text"], 26)[:3]:
-        d.text((84, yy), line, font=font(34), fill=AMBER)
-        yy += 44
+    for line in olines:
+        d.text((84, yy), line, font=of, fill=AMBER)
+        yy += of.size + 10
     # bottom bar (captions will sit above it)
     d.rectangle([0, H - 44, W, H], fill=(8, 15, 26))
     d.text((24, H - 34), channel, font=font(20, True), fill=GREY)
