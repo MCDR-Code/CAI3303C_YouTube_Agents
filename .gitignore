@@ -1,0 +1,20 @@
+# secrets
+.env
+
+# generated media, reports, databases
+output/
+*.db
+data/*.db
+
+# python
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

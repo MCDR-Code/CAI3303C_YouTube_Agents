@@ -1,0 +1,97 @@
+# ------------------------------------------------------------------
+# YouTube Agent System - configuration
+# ------------------------------------------------------------------
+# Master switch. "mock" runs the whole weekly loop with no paid services:
+# a scripted mock LLM, fake channel stats, placeholder images, offline TTS,
+# and a fake uploader. "real" uses Prune, YouTube APIs and paid media APIs.
+mode: mock
+
+# Each backend can be overridden on its own. "auto" follows `mode`.
+#   llm:            mock | prune
+#   channel_stats:  mock | youtube
+#   images:         mock | prune
+#   tts:            offline | prune | silent      (mock -> offline)
+#   upload:         mock | youtube
+backends:
+  llm: auto
+  channel_stats: auto
+  images: auto
+  tts: auto
+  upload: auto
+
+channel:
+  name: "Professor Explains AI"        # working title
+  host: "the Professor"
+  niche: "AI and technology explained by a college professor"
+  videos_per_week: 2
+  # Uploads are ALWAYS private. The professor makes a video public himself
+  # in YouTube Studio after it is uploaded. This value cannot be "public".
+  upload_privacy: private
+
+prune:
+  base_url: "https://api.withprune.com/v1"
+
+# Model per agent (any model name Prune routes).
+models:
+  producer: gpt-4o-mini
+  trend_researcher: gpt-4o-mini
+  topic_strategist: gpt-4o-mini
+  scriptwriter: gpt-4o
+  fact_checker: gpt-4o
+  seo_metadata: gpt-4o-mini
+  visual_designer: gpt-4o-mini
+  analytics: gpt-4o-mini
+  business_manager: gpt-4o-mini
+
+# USD per 1M tokens. Used to price every call in the cost ledger.
+# In real mode, Prune's receipt cost is used instead when the response has one.
+pricing:
+  gpt-4o-mini: {input: 0.15, output: 0.60}
+  gpt-4o:      {input: 2.50, output: 10.00}
+  tts_per_1k_chars: 0.015          # real TTS only; offline TTS costs 0
+  image_each: 0.04                  # real images only
+
+# Local weekly spend guard per agent (USD). Prune's per-key caps are the
+# hard limit; this one stops a run early and logs why.
+budgets_weekly_usd:
+  producer: 0.50
+  trend_researcher: 0.50
+  topic_strategist: 0.50
+  scriptwriter: 2.00
+  fact_checker: 1.50
+  seo_metadata: 0.50
+  visual_designer: 0.50
+  analytics: 0.50
+  business_manager: 0.50
+
+economics:
+  # Mock RPM (revenue per 1000 monetized views) by topic category, USD.
+  # Education/tech is one of the higher-paying niches.
+  rpm_usd:
+    ai_tools: 10.0
+    explainer: 7.5
+    coding: 12.0
+    ethics_society: 5.0
+    careers: 9.0
+  monetized_view_share: 0.55
+  # A brand-new channel earns $0 in ads until it joins the YouTube Partner
+  # Program. Mock mode assumes it is already monetized so the profit loop
+  # has something to optimize. Set false to see the honest day-one numbers.
+  assume_monetized: true
+
+video:
+  width: 1280
+  height: 720
+  fps: 24
+  burn_captions: true      # also always writes a separate .srt file
+  tts_rate: 165            # words per minute for offline voice
+
+simulation:
+  seed: 7
+  start_date: "2026-11-16" # Monday of simulated week 1
+  days_per_week: 7
+
+paths:
+  output_dir: output
+  db_path: data/channel.db
+  prompts_dir: prompts
