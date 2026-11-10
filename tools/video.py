@@ -13,7 +13,7 @@ import subprocess
 from pathlib import Path
 
 from tools import images, tts
-from tools.storage import Store
+from tools.storage import Store, relpath
 
 PAD = 0.6  # seconds of silence after each scene
 
@@ -121,7 +121,7 @@ def render_episode(cfg, store: Store, ep_id: str) -> Path:
     shutil.move(str(work / final_name), final)
     shutil.copy(work / "captions.srt", out / f"{ep_id}_r{rev}.srt")
     duration = tts.probe_duration(final)
-    store.update_episode(ep_id, video_path=str(final), srt_path=str(out / f"{ep_id}_r{rev}.srt"),
+    store.update_episode(ep_id, video_path=relpath(final), srt_path=relpath(out / f"{ep_id}_r{rev}.srt"),
                          duration_sec=duration, status="pending_review")
     store.log("video", f"rendered {final.name} ({duration:.0f}s, voice: {engine})", ep["week"], ep_id)
     print(f"   video ready: {final.name} ({duration:.0f}s, voice: {engine}) -> waiting for professor review")

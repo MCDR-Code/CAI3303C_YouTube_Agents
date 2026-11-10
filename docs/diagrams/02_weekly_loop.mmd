@@ -1,0 +1,22 @@
+flowchart TB
+    MON["<b>Monday: plan</b><br/>Producer → Trend Researcher → Topic Strategist<br/>reads last week's plan, picks N videos, writes briefs"]
+    TUE["<b>Tuesday–Wednesday: produce</b><br/>Scriptwriter ⇄ Fact-Checker → SEO → Visual Designer<br/>then text-to-speech + captions + ffmpeg = MP4"]
+    THU["<b>Thursday: professor review</b><br/>review page: approve / request changes / reject"]
+    REV["<b>Revise</b><br/>notes go back to the Scriptwriter;<br/>new revision, re-rendered, reviewed again"]
+    FRI["<b>Friday: publish</b><br/>approval gate re-checks → upload as PRIVATE<br/>professor makes it public in YouTube Studio"]
+    WKD["<b>Weekend: measure</b><br/>views, CTR, watch time, revenue<br/>(simulated in mock mode)"]
+    SUN["<b>Sunday: review and plan</b><br/>Producer → Analytics → Business Manager<br/>profit per video = revenue − AI cost (Prune)"]
+    RPT["<b>Weekly report + dashboard</b><br/>next week: how many videos, which categories,<br/>title guidance, agent budgets"]
+
+    MON --> TUE --> THU
+    THU -- "changes requested" --> REV --> THU
+    THU -- "rejected" --> X["Not published<br/>(its AI cost counts as a loss)"]
+    THU -- "approved" --> FRI --> WKD --> SUN --> RPT
+    RPT -- "plan feeds next Monday" --> MON
+
+    classDef prof fill:#fff1cc,stroke:#c98500,color:#3a2c00
+    classDef agent fill:#e6f4f1,stroke:#2bb3a3,color:#0f1b2d
+    classDef out fill:#e6eef9,stroke:#2a78d6,color:#0f1b2d
+    class THU,REV prof
+    class MON,TUE,SUN agent
+    class FRI,WKD,RPT out

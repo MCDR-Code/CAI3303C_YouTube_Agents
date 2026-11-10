@@ -10,7 +10,7 @@ import json
 import uuid
 
 from approval.gate import can_upload
-from tools.storage import Store, now
+from tools.storage import Store, abspath, now
 
 PRIVACY = "private"   # fixed. The professor makes a video public in YouTube Studio.
 
@@ -31,6 +31,7 @@ def build_request(ep: dict) -> dict:
             "containsSyntheticMedia": True,    # synthetic (AI) voice disclosure
         },
         "media": {"video": ep["video_path"], "thumbnail": ep["thumbnail_path"], "captions": ep["srt_path"]},
+        # paths are relative to the project folder; _real_upload resolves them
     }
 
 
@@ -67,7 +68,7 @@ def _real_upload(req: dict) -> str:  # pragma: no cover - needs OAuth and a real
     from tools.youtube_auth import get_credentials
 
     yt = build("youtube", "v3", credentials=get_credentials())
-    media = req.pop("media")
+    media = {k: str(abspath(v)) for k, v in req.pop("media").items()}
     res = yt.videos().insert(part="snippet,status", body=req,
                              media_body=MediaFileUpload(media["video"], chunksize=-1, resumable=True)).execute()
     vid = res["id"]

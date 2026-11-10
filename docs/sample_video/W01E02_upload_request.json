@@ -1,0 +1,31 @@
+{
+  "video_id": "MOCK-20b3e84ba1e",
+  "request": {
+    "snippet": {
+      "title": "RAG explained: how chatbots read your documents",
+      "description": "Why can a chatbot answer questions about a PDF it has never seen before?\n\nA college professor walks you through it in three steps: the problem; retrieve first; then generate.\n\nChapters\n0:00 RAG explained: how chatbots read your documents\n0:18 The problem\n0:25 Retrieve first\n0:31 Then generate\n0:38 A real example\n0:45 Recap\n0:49 What should I explain next?\n\nNarration in this video uses a synthetic (AI) voice. Script reviewed and approved by the professor.\n\n#AI #MachineLearning #Education",
+      "tags": [
+        "AI explained",
+        "rag explained: how chatbots read your documents",
+        "ai tools",
+        "artificial intelligence",
+        "machine learning for beginners",
+        "professor explains",
+        "tech education"
+      ],
+      "categoryId": "27",
+      "defaultLanguage": "en"
+    },
+    "status": {
+      "privacyStatus": "private",
+      "selfDeclaredMadeForKids": false,
+      "containsSyntheticMedia": true
+    },
+    "media": {
+      "video": "output/episodes/W01E02/W01E02_r2.mp4",
+      "thumbnail": "output/episodes/W01E02/thumbnail.png",
+      "captions": "output/episodes/W01E02/W01E02_r2.srt"
+    }
+  },
+  "gate": "approved by SIMULATED professor (demo) at 2026-11-09T19:17:06"
+}

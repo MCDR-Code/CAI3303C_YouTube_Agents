@@ -47,8 +47,8 @@ Mode: MOCK  backends: {'llm': 'mock', 'channel_stats': 'mock', 'images': 'mock',
    SIMULATED professor (demo): W01E02 r2 -> approved (Looks good.)
 
 == Week 1: publish (private) ==
-   upload W01E01: {'ok': True, 'video_id': 'MOCK-9051156a4d9', 'privacy': 'private'}
-   upload W01E02: {'ok': True, 'video_id': 'MOCK-b673fb6260b', 'privacy': 'private'}
+   upload W01E01: {'ok': True, 'video_id': 'MOCK-737fc7c8f0a', 'privacy': 'private'}
+   upload W01E02: {'ok': True, 'video_id': 'MOCK-20b3e84ba1e', 'privacy': 'private'}
 
 == Week 1: analytics, profit report and next-week plan ==
    simulated 6 video-days of stats (through sim day 6)
@@ -57,7 +57,7 @@ Mode: MOCK  backends: {'llm': 'mock', 'channel_stats': 'mock', 'images': 'mock',
    [analytics] insights saved (best category: ai_tools)
    [business_manager] plan for week 2: 3 videos, favor ['ai_tools']
    agents used: producer -> analytics -> business_manager
-   weekly report: /home/claude/YouTube_Agent_System/output/reports/week_01.html
+   weekly report: output/reports/week_01.html
 
 == Week 2: planning ==
    [producer] Week 2, stage 'plan'
@@ -102,8 +102,8 @@ Mode: MOCK  backends: {'llm': 'mock', 'channel_stats': 'mock', 'images': 'mock',
    SIMULATED professor (demo): W02E03 r1 -> rejected (I already cover this topic in class this semester; skip it for now.)
 
 == Week 2: publish (private) ==
-   upload W02E01: {'ok': True, 'video_id': 'MOCK-a215c319c24', 'privacy': 'private'}
-   upload W02E02: {'ok': True, 'video_id': 'MOCK-95def5c18d8', 'privacy': 'private'}
+   upload W02E01: {'ok': True, 'video_id': 'MOCK-cad6531e4bc', 'privacy': 'private'}
+   upload W02E02: {'ok': True, 'video_id': 'MOCK-e061e8d000f', 'privacy': 'private'}
 
 == Week 2: analytics, profit report and next-week plan ==
    simulated 20 video-days of stats (through sim day 13)
@@ -112,6 +112,6 @@ Mode: MOCK  backends: {'llm': 'mock', 'channel_stats': 'mock', 'images': 'mock',
    [analytics] insights saved (best category: ai_tools)
    [business_manager] plan for week 3: 3 videos, favor ['ai_tools']
    agents used: producer -> analytics -> business_manager
-   weekly report: /home/claude/YouTube_Agent_System/output/reports/week_02.html
+   weekly report: output/reports/week_02.html
 
 Done. Run `python main.py serve` to see the review page and dashboard.

@@ -1,0 +1,65 @@
+flowchart TB
+    PR["prompts/*.txt<br/>one instruction file per agent"]
+
+    subgraph TEAM["Agent team · OpenAI Agents SDK with Swarm-style handoffs"]
+        direction LR
+        P["Producer<br/>(orchestrator)"]
+        subgraph PLAN["Plan"]
+            direction TB
+            TR["Trend Researcher"] --> TS["Topic Strategist"]
+        end
+        subgraph MAKE["Produce"]
+            direction TB
+            SW["Scriptwriter"] <--> FC["Fact-Checker"]
+            FC --> SEO["SEO / Metadata"] --> VD["Visual Designer"]
+        end
+        subgraph REVIEW["Review the week"]
+            direction TB
+            AN["Analytics"] --> BM["Business Manager"]
+        end
+        P --> TR
+        P --> SW
+        P --> AN
+    end
+
+    subgraph GW["Prune AI gateway · api.withprune.com/v1"]
+        direction LR
+        K["one Prune key per agent<br/>= one spend cap per agent"] --> LLM["LLM provider<br/>gpt-4o / gpt-4o-mini"]
+    end
+    MOCK["MockModel: replaces Prune in mock mode<br/>(no paid calls, same handoffs and tools)"]
+
+    subgraph MEDIA["Video pipeline"]
+        direction LR
+        IMG["images<br/>placeholder art / image API"] --> FF
+        TTS["text-to-speech<br/>offline voice / Prune TTS"] --> CAP["captions (SRT)"] --> FF["ffmpeg<br/>slides + voice + captions → MP4"]
+    end
+
+    DB[("SQLite: episodes, decisions,<br/>AI cost ledger, stats, plans")]
+
+    subgraph PROF["The professor"]
+        direction LR
+        RP["Review page<br/>approve / request changes / reject"]
+        DASH["Dashboard + weekly reports<br/>profit per video, cost per agent"]
+    end
+
+    GATE{"Approval gate<br/>plain Python, not an agent"}
+    UP["Uploader<br/>PRIVATE only"]
+    YT["YouTube<br/>fake uploader + simulated stats in mock mode"]
+
+    PR -.-> TEAM
+    TEAM -- "every LLM call" --> GW
+    MOCK -.- GW
+    VD --> MEDIA
+    TEAM <--> DB
+    FF --> RP --> GATE
+    GATE -- "approved, current revision only" --> UP --> YT
+    YT -- "views, CTR, revenue" --> DB
+    DB --> DASH
+    BM -. "next week's plan" .-> TS
+
+    classDef agent fill:#e6f4f1,stroke:#2bb3a3,color:#0f1b2d
+    classDef gate fill:#fff1cc,stroke:#c98500,color:#3a2c00
+    classDef ext fill:#e6eef9,stroke:#2a78d6,color:#0f1b2d
+    class P,TR,TS,SW,FC,SEO,VD,AN,BM agent
+    class GATE,UP,RP gate
+    class YT,LLM,K ext

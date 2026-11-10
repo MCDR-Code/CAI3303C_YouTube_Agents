@@ -47,7 +47,7 @@ THUMB_TEXT = {
     "embeddings": "MEANING = MATH", "ai-ethics-bias": "BIASED AI", "prompting": "BETTER PROMPTS",
     "neural-net": "ONE NEURON", "local-llm": "AI ON YOUR PC", "ai-cheating": "CHEATING?",
 }
-WPM = 150
+WPM = 165  # matches the offline voice rate in config.yaml
 
 
 def _est_tokens(*parts: Any) -> int:
@@ -258,7 +258,7 @@ def seo_brain(s: RunState) -> Iterator[Action]:
         prof = f"{plain} | A Professor Explains"
         titles = [q, plain, prof] if "question" in guidance else [plain, q, prof]
         scenes = ep["script"]["scenes"]
-        desc = (f"{t['hook']}\n\nIn this video a college professor explains {t['topic'].lower()}: "
+        desc = (f"{t['hook']}\n\nA college professor walks you through it in three steps: "
                 + "; ".join(p[0].lower() for p in t["points"]) + ".\n\n"
                 "Chapters\n" + "\n".join(f"{c['timestamp']} {c['title']}" for c in _chapters(scenes))
                 + "\n\nNarration in this video uses a synthetic (AI) voice. Script reviewed and approved by the "

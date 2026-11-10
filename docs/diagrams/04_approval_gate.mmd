@@ -1,0 +1,22 @@
+flowchart TB
+    V["Rendered video<br/>status: pending_review"] --> R{"Professor on the review page"}
+    R -- "Approve" --> A["status: approved<br/>decision saved with revision number"]
+    R -- "Request changes<br/>(notes required)" --> C["status: changes_requested"] --> S["Scriptwriter revises<br/>→ Fact-Checker → SEO → Visuals<br/>→ re-render (revision + 1)"] --> V
+    R -- "Reject" --> J["status: rejected<br/>never uploaded"]
+    A --> U["Upload button / publish step"]
+    U --> G{"Gate checks, every time"}
+    G -- "latest decision = approved?" --> G2{"approval is for the<br/>current revision?"}
+    G2 -- "yes" --> G3{"not uploaded already,<br/>video file exists?"}
+    G3 -- "yes" --> UP["Upload with privacyStatus = PRIVATE<br/>synthetic-voice disclosure on"]
+    G -- "no" --> NO["REFUSED and logged"]
+    G2 -- "no" --> NO
+    G3 -- "no" --> NO
+    UP --> PUB["The professor makes it public himself<br/>in YouTube Studio"]
+    N1["No agent has an approve tool.<br/>config.yaml refuses upload_privacy other than private."]
+
+    classDef prof fill:#fff1cc,stroke:#c98500,color:#3a2c00
+    classDef bad fill:#fbe3e3,stroke:#d03b3b,color:#5c0f0f
+    classDef good fill:#e3f4e3,stroke:#0ca30c,color:#0b3d0b
+    class R,PUB prof
+    class NO,J bad
+    class UP good

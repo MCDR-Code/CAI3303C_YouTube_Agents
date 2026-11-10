@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.storage import Store, now
+from tools.storage import Store, abspath, now
 
 DECISIONS = {"approved", "changes_requested", "rejected"}
 
@@ -52,6 +52,6 @@ def can_upload(store: Store, ep_id: str) -> tuple[bool, str]:
         return False, f"approval was for revision {d['revision']}, current is {ep['revision']}"
     if ep["status"] != "approved":
         return False, f"status is '{ep['status']}'"
-    if not ep.get("video_path") or not Path(ep["video_path"]).exists():
+    if not ep.get("video_path") or not abspath(ep["video_path"]).exists():
         return False, "video file missing"
     return True, f"approved by {d['decided_by']} at {d['decided_at']}"

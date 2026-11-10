@@ -14,6 +14,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
+from tools.storage import abspath, relpath
+
 ROOT = Path(__file__).resolve().parent.parent
 FONT = ROOT / "assets" / "fonts" / "DejaVuSans.ttf"
 FONT_BOLD = ROOT / "assets" / "fonts" / "DejaVuSans-Bold.ttf"
@@ -91,10 +93,10 @@ def render_episode_images(cfg, episode: dict, thumbnail: dict, scenes: list[dict
         else:
             _real_image(cfg, v["image_prompt"], p)
             _charge_image(cfg, episode)
-        scene_paths.append(str(p))
+        scene_paths.append(relpath(p))
     thumb = out_dir / "thumbnail.png"
     make_thumbnail(cfg, thumbnail, thumb)
-    return {"scenes": scene_paths, "thumbnail": str(thumb)}
+    return {"scenes": scene_paths, "thumbnail": relpath(thumb)}
 
 
 def _charge_image(cfg, episode: dict) -> None:
@@ -170,7 +172,8 @@ def make_slide(cfg, scene: dict, art_path: str | None, index: int, total: int, c
     img = Image.new("RGB", (W, H), NAVY)
     d = ImageDraw.Draw(img)
     d.rectangle([0, 0, W, 8], fill=TEAL)
-    if art_path and Path(art_path).exists():
+    art_path = abspath(art_path)
+    if art_path and art_path.exists():
         art = Image.open(art_path).convert("RGB").resize((560, 420))
         img.paste(art, (W - 560 - 50, 110))
     d.text((60, 70), f"{index}/{total}", font=font(22, True), fill=TEAL)

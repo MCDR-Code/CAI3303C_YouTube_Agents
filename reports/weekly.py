@@ -151,5 +151,7 @@ def write_weekly_report(cfg, store, week: int) -> Path:
     html = out / f"week_{week:02d}.html"
     md.write_text(to_markdown(d, cfg.mode), encoding="utf-8")
     html.write_text(to_html(d, cfg.mode), encoding="utf-8")
-    store.x("UPDATE weeks SET report_path=? WHERE week=?", (str(html), week))
+    from tools.storage import relpath
+
+    store.x("UPDATE weeks SET report_path=? WHERE week=?", (relpath(html), week))
     return html

@@ -15,7 +15,7 @@ import yaml
 from agents_system import pipeline
 from agents_system.config import ROOT, load_config
 from approval.gate import GateError, can_upload, record_decision
-from tools.storage import Store
+from tools.storage import Store, abspath
 from tools.youtube_upload import upload
 
 
@@ -41,7 +41,7 @@ def test_agents_build_a_complete_package(env):
     ep = store.episode(ep_id)
     assert ep["status"] == "pending_review"
     assert ep["script"]["scenes"] and ep["metadata"]["titles"] and ep["visuals"]["thumbnail"]
-    assert Path(ep["video_path"]).exists() and Path(ep["srt_path"]).exists()
+    assert abspath(ep["video_path"]).exists() and abspath(ep["srt_path"]).exists()
     agents = {r[0] for r in store.q("SELECT DISTINCT agent FROM ai_costs")}
     assert {"producer", "trend_researcher", "topic_strategist", "scriptwriter", "fact_checker",
             "seo_metadata", "visual_designer"} <= agents

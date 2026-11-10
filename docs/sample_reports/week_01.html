@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Week 1 report</title>
+<style>
+.viz-root{color-scheme:light;--surface-1:#fcfcfb;--text-primary:#0b0b0b;--text-secondary:#52514e;
+ --muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--pos:#2a78d6;--neg:#e34948;--mag:#2a78d6}
+@media (prefers-color-scheme: dark){.viz-root{color-scheme:dark;--surface-1:#1a1a19;--text-primary:#f0efec;
+ --text-secondary:#c3c2b7;--grid:#2c2c2a;--axis:#383835;--pos:#3987e5;--neg:#e66767;--mag:#3987e5}}
+.chart text{font:13px system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--text-secondary)}
+.chart text.val{fill:var(--text-primary);font-variant-numeric:tabular-nums}
+.chart text.axis{fill:var(--muted);font-size:11px}
+.chart .zero{stroke:var(--axis);stroke-width:1.5}
+.chart .bar{stroke:var(--surface-1);stroke-width:2}
+.chart .bar.pos{fill:var(--pos)} .chart .bar.neg{fill:var(--neg)} .chart .bar.mag{fill:var(--mag)}
+.chart .bar:hover{opacity:.8}
+#tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);padding:6px 9px;
+ border-radius:6px;font:12px system-ui,sans-serif;white-space:pre;display:none;z-index:9}
+
+body{font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:32px auto;padding:0 20px;
+background:var(--surface-1);color:var(--text-primary)}
+h1{font-size:26px;margin-bottom:4px} h2{font-size:18px;margin-top:34px}
+table{border-collapse:collapse;width:100%;font-size:14px} td,th{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums} .muted{color:var(--muted)}
+.banner{background:#fff4d6;color:#5a4300;padding:8px 12px;border-radius:6px}
+.kpis{display:flex;gap:12px;flex-wrap:wrap} .kpi{border:1px solid var(--grid);border-radius:8px;padding:10px 14px;min-width:130px}
+.kpi b{display:block;font-size:22px} .kpi span{color:var(--text-secondary);font-size:13px}
+</style></head><body class="viz-root">
+<h1>Weekly report: week 1</h1><p class="muted">Simulated week starting 2026-11-16</p><p class='banner'>MOCK MODE: views and revenue are simulated; the LLM is the scripted mock model; token costs are estimated from real prompt sizes at config.yaml prices.</p>
+<div class="kpis"><div class="kpi"><span>Revenue to date</span><b>$1.21</b></div>
+<div class="kpi"><span>AI cost (Prune)</span><b>$0.20</b></div>
+<div class="kpi"><span>Profit</span><b>$1.01</b></div>
+<div class="kpi"><span>Published (private)</span><b>2 / 2</b></div>
+<div class="kpi"><span>Views</span><b>247</b></div></div>
+<h2>Profit per video</h2><svg class="chart" viewBox="0 0 760 90" width="100%" role="img" aria-label="Profit per video bar chart"><text class="lbl" x="80" y="24" text-anchor="end">W01E01</text><rect class="bar pos" x="90.0" y="10" width="326.8" height="18" rx="4" data-tip="W01E01 (uploaded)
+Embeddings: how computers understand meaning
+Views 113
+Revenue $0.47
+AI cost $0.1106
+Profit $0.36"/><text class="val" x="422.8" y="24" text-anchor="start">$0.36</text><text class="lbl" x="80" y="54" text-anchor="end">W01E02</text><rect class="bar pos" x="90.0" y="40" width="590.0" height="18" rx="4" data-tip="W01E02 (uploaded)
+RAG explained: how chatbots read your documents
+Views 134
+Revenue $0.74
+AI cost $0.0847
+Profit $0.65"/><text class="val" x="686.0" y="54" text-anchor="start">$0.65</text><line class="zero" x1="90.0" x2="90.0" y1="4" y2="70"/><text class="axis" x="90.0" y="86" text-anchor="middle">$0</text></svg>
+<table><tr><th>Video</th><th>Title</th><th>Status</th><th class=n>Views</th><th class=n>Revenue</th><th class=n>AI cost</th><th class=n>Profit</th></tr><tr><td>W01E01</td><td>Embeddings: how computers understand meaning</td><td>uploaded</td><td class='n'>113</td><td class='n'>$0.47</td><td class='n'>$0.1106</td><td class='n'><b>$0.36</b></td></tr><tr><td>W01E02</td><td>RAG explained: how chatbots read your documents</td><td>uploaded</td><td class='n'>134</td><td class='n'>$0.74</td><td class='n'>$0.0847</td><td class='n'><b>$0.65</b></td></tr></table>
+<p class="muted">The chart shows finished videos (uploaded or rejected); videos still in review appear only in the table. AI cost = the video's own agent calls + an equal share of the week's planning and review calls.</p>
+<h2>Cost per agent this week</h2><svg class="chart" viewBox="0 0 520 300" width="100%" role="img" aria-label="Cost per agent bar chart"><text class="lbl" x="120" y="24" text-anchor="end">fact_checker</text><rect class="bar mag" x="130" y="10" width="300.0" height="18" rx="4" data-tip="fact_checker
+12 calls
+35,671 in / 263 out tokens
+Cost $0.0918"/><text class="val" x="436.0" y="24">$0.0918</text><text class="lbl" x="120" y="54" text-anchor="end">scriptwriter</text><rect class="bar mag" x="130" y="40" width="265.4" height="18" rx="4" data-tip="scriptwriter
+12 calls
+24,005 in / 2,115 out tokens
+Cost $0.0812"/><text class="val" x="401.4" y="54">$0.0812</text><text class="lbl" x="120" y="84" text-anchor="end">seo_metadata</text><rect class="bar mag" x="130" y="70" width="27.5" height="18" rx="4" data-tip="seo_metadata
+12 calls
+51,292 in / 1,233 out tokens
+Cost $0.0084"/><text class="val" x="163.5" y="84">$0.0084</text><text class="lbl" x="120" y="114" text-anchor="end">visual_designer</text><rect class="bar mag" x="130" y="100" width="26.8" height="18" rx="4" data-tip="visual_designer
+9 calls
+49,089 in / 1,366 out tokens
+Cost $0.0082"/><text class="val" x="162.8" y="114">$0.0082</text><text class="lbl" x="120" y="144" text-anchor="end">topic_strategist</text><rect class="bar mag" x="130" y="130" width="7.2" height="18" rx="4" data-tip="topic_strategist
+5 calls
+13,306 in / 257 out tokens
+Cost $0.0022"/><text class="val" x="143.2" y="144">$0.0022</text><text class="lbl" x="120" y="174" text-anchor="end">business_manager</text><rect class="bar mag" x="130" y="160" width="3.6" height="18" rx="4" data-tip="business_manager
+3 calls
+6,447 in / 195 out tokens
+Cost $0.0011"/><text class="val" x="139.6" y="174">$0.0011</text><text class="lbl" x="120" y="204" text-anchor="end">producer</text><rect class="bar mag" x="130" y="190" width="3.3" height="18" rx="4" data-tip="producer
+10 calls
+6,121 in / 155 out tokens
+Cost $0.0010"/><text class="val" x="139.3" y="204">$0.0010</text><text class="lbl" x="120" y="234" text-anchor="end">trend_researcher</text><rect class="bar mag" x="130" y="220" width="2.9" height="18" rx="4" data-tip="trend_researcher
+3 calls
+4,668 in / 388 out tokens
+Cost $0.0009"/><text class="val" x="138.9" y="234">$0.0009</text><text class="lbl" x="120" y="264" text-anchor="end">analytics</text><rect class="bar mag" x="130" y="250" width="2.0" height="18" rx="4" data-tip="analytics
+3 calls
+2,880 in / 178 out tokens
+Cost $0.0005"/><text class="val" x="138.0" y="264">$0.0005</text><line class="zero" x1="130" x2="130" y1="4" y2="280"/></svg>
+<table><tr><th>Agent</th><th class=n>Calls</th><th class=n>Input tokens</th><th class=n>Output tokens</th><th class=n>Cost</th></tr><tr><td>fact_checker</td><td class='n'>12</td><td class='n'>35,671</td><td class='n'>263</td><td class='n'>$0.0918</td></tr><tr><td>scriptwriter</td><td class='n'>12</td><td class='n'>24,005</td><td class='n'>2,115</td><td class='n'>$0.0812</td></tr><tr><td>seo_metadata</td><td class='n'>12</td><td class='n'>51,292</td><td class='n'>1,233</td><td class='n'>$0.0084</td></tr><tr><td>visual_designer</td><td class='n'>9</td><td class='n'>49,089</td><td class='n'>1,366</td><td class='n'>$0.0082</td></tr><tr><td>topic_strategist</td><td class='n'>5</td><td class='n'>13,306</td><td class='n'>257</td><td class='n'>$0.0022</td></tr><tr><td>business_manager</td><td class='n'>3</td><td class='n'>6,447</td><td class='n'>195</td><td class='n'>$0.0011</td></tr><tr><td>producer</td><td class='n'>10</td><td class='n'>6,121</td><td class='n'>155</td><td class='n'>$0.0010</td></tr><tr><td>trend_researcher</td><td class='n'>3</td><td class='n'>4,668</td><td class='n'>388</td><td class='n'>$0.0009</td></tr><tr><td>analytics</td><td class='n'>3</td><td class='n'>2,880</td><td class='n'>178</td><td class='n'>$0.0005</td></tr></table>
+<h2>What the Analytics agent found</h2><p>2 published video(s) analysed.</p><ul><li>Top video so far: W01E02 &#x27;RAG explained: how chatbots read your documents&#x27; with 134 views and CTR 4.7%.</li><li>Category ai_tools: $0.74 revenue per video (1 video(s)).</li><li>Category explainer: $0.47 revenue per video (1 video(s)).</li><li>All titles so far were plain statements; no question titles to compare yet.</li><li>Average view percentage 52%. Short videos keep viewers to the end.</li></ul>
+<h2>Business Manager's plan for week 2</h2>
+<p>Week 1: 2 video(s) live, revenue to date $1.21, AI cost $0.19, profit $1.02.</p>
+<ul><li>Videos next week: <b>3</b></li>
+<li>Favor: ai_tools</li>
+<li>Avoid: none</li>
+<li>Title guidance: no question titles tested yet; try question titles</li><li>Budget changes: none</li></ul>
+<p><b>Why:</b> Every published video is profitable, so the AI cost per video is small compared with ad revenue; making 3 videos next week raises profit. Favor &#x27;ai_tools&#x27; because it earns the most profit per video. Analytics says: no question titles tested yet; try question titles.</p>
+<h2>Professor decisions this week</h2>
+<table><tr><th>Video</th><th>Rev</th><th>Decision</th><th>Notes</th><th>By</th></tr><tr><td>W01E01</td><td>r1</td><td>approved</td><td>Looks good.</td><td>SIMULATED professor (demo)</td></tr><tr><td>W01E02</td><td>r1</td><td>changes_requested</td><td>Make it shorter and add a real example from my classroom.</td><td>SIMULATED professor (demo)</td></tr><tr><td>W01E02</td><td>r2</td><td>approved</td><td>Looks good.</td><td>SIMULATED professor (demo)</td></tr></table>
+
+<div id="tip"></div>
+<script>
+(function(){const t=document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+ el.addEventListener('mousemove',e=>{t.textContent=el.dataset.tip;t.style.display='block';
+   t.style.left=(e.clientX+14)+'px';t.style.top=(e.clientY+10)+'px';});
+ el.addEventListener('mouseleave',()=>{t.style.display='none';});});})();
+</script>
+</body></html>

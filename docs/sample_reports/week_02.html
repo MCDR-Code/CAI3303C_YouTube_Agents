@@ -1,0 +1,108 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Week 2 report</title>
+<style>
+.viz-root{color-scheme:light;--surface-1:#fcfcfb;--text-primary:#0b0b0b;--text-secondary:#52514e;
+ --muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--pos:#2a78d6;--neg:#e34948;--mag:#2a78d6}
+@media (prefers-color-scheme: dark){.viz-root{color-scheme:dark;--surface-1:#1a1a19;--text-primary:#f0efec;
+ --text-secondary:#c3c2b7;--grid:#2c2c2a;--axis:#383835;--pos:#3987e5;--neg:#e66767;--mag:#3987e5}}
+.chart text{font:13px system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--text-secondary)}
+.chart text.val{fill:var(--text-primary);font-variant-numeric:tabular-nums}
+.chart text.axis{fill:var(--muted);font-size:11px}
+.chart .zero{stroke:var(--axis);stroke-width:1.5}
+.chart .bar{stroke:var(--surface-1);stroke-width:2}
+.chart .bar.pos{fill:var(--pos)} .chart .bar.neg{fill:var(--neg)} .chart .bar.mag{fill:var(--mag)}
+.chart .bar:hover{opacity:.8}
+#tip{position:fixed;pointer-events:none;background:var(--text-primary);color:var(--surface-1);padding:6px 9px;
+ border-radius:6px;font:12px system-ui,sans-serif;white-space:pre;display:none;z-index:9}
+
+body{font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:32px auto;padding:0 20px;
+background:var(--surface-1);color:var(--text-primary)}
+h1{font-size:26px;margin-bottom:4px} h2{font-size:18px;margin-top:34px}
+table{border-collapse:collapse;width:100%;font-size:14px} td,th{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:left}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums} .muted{color:var(--muted)}
+.banner{background:#fff4d6;color:#5a4300;padding:8px 12px;border-radius:6px}
+.kpis{display:flex;gap:12px;flex-wrap:wrap} .kpi{border:1px solid var(--grid);border-radius:8px;padding:10px 14px;min-width:130px}
+.kpi b{display:block;font-size:22px} .kpi span{color:var(--text-secondary);font-size:13px}
+</style></head><body class="viz-root">
+<h1>Weekly report: week 2</h1><p class="muted">Simulated week starting 2026-11-23</p><p class='banner'>MOCK MODE: views and revenue are simulated; the LLM is the scripted mock model; token costs are estimated from real prompt sizes at config.yaml prices.</p>
+<div class="kpis"><div class="kpi"><span>Revenue to date</span><b>$4.33</b></div>
+<div class="kpi"><span>AI cost (Prune)</span><b>$0.31</b></div>
+<div class="kpi"><span>Profit</span><b>$4.02</b></div>
+<div class="kpi"><span>Published (private)</span><b>4 / 5</b></div>
+<div class="kpi"><span>Views</span><b>815</b></div></div>
+<h2>Profit per video</h2><svg class="chart" viewBox="0 0 760 180" width="100%" role="img" aria-label="Profit per video bar chart"><text class="lbl" x="80" y="24" text-anchor="end">W01E01</text><rect class="bar pos" x="106.4" y="10" width="340.1" height="18" rx="4" data-tip="W01E01 (uploaded)
+Embeddings: how computers understand meaning
+Views 229
+Revenue $0.94
+AI cost $0.1106
+Profit $0.83"/><text class="val" x="452.5" y="24" text-anchor="start">$0.83</text><text class="lbl" x="80" y="54" text-anchor="end">W01E02</text><rect class="bar pos" x="106.4" y="40" width="573.6" height="18" rx="4" data-tip="W01E02 (uploaded)
+RAG explained: how chatbots read your documents
+Views 270
+Revenue $1.49
+AI cost $0.0847
+Profit $1.40"/><text class="val" x="686.0" y="54" text-anchor="start">$1.40</text><text class="lbl" x="80" y="84" text-anchor="end">W02E01</text><rect class="bar pos" x="106.4" y="70" width="360.6" height="18" rx="4" data-tip="W02E01 (uploaded)
+What Is an AI Agent, Really?
+Views 167
+Revenue $0.92
+AI cost $0.0382
+Profit $0.88"/><text class="val" x="472.9" y="84" text-anchor="start">$0.88</text><text class="lbl" x="80" y="114" text-anchor="end">W02E02</text><rect class="bar pos" x="106.4" y="100" width="389.2" height="18" rx="4" data-tip="W02E02 (uploaded)
+Can You Run AI on Your Own PC?
+Views 149
+Revenue $0.98
+AI cost $0.0381
+Profit $0.95"/><text class="val" x="501.6" y="114" text-anchor="start">$0.95</text><text class="lbl" x="80" y="144" text-anchor="end">W02E03</text><rect class="bar neg" x="90.0" y="130" width="16.4" height="18" rx="4" data-tip="W02E03 (rejected)
+Why Does AI Make Things Up?
+Views 0
+Revenue $0.00
+AI cost $0.0394
+Profit -$0.04"/><text class="val" x="112.4" y="144" text-anchor="start">-$0.04</text><line class="zero" x1="106.4" x2="106.4" y1="4" y2="160"/><text class="axis" x="106.4" y="176" text-anchor="middle">$0</text></svg>
+<table><tr><th>Video</th><th>Title</th><th>Status</th><th class=n>Views</th><th class=n>Revenue</th><th class=n>AI cost</th><th class=n>Profit</th></tr><tr><td>W01E01</td><td>Embeddings: how computers understand meaning</td><td>uploaded</td><td class='n'>229</td><td class='n'>$0.94</td><td class='n'>$0.1106</td><td class='n'><b>$0.83</b></td></tr><tr><td>W01E02</td><td>RAG explained: how chatbots read your documents</td><td>uploaded</td><td class='n'>270</td><td class='n'>$1.49</td><td class='n'>$0.0847</td><td class='n'><b>$1.40</b></td></tr><tr><td>W02E01</td><td>What Is an AI Agent, Really?</td><td>uploaded</td><td class='n'>167</td><td class='n'>$0.92</td><td class='n'>$0.0382</td><td class='n'><b>$0.88</b></td></tr><tr><td>W02E02</td><td>Can You Run AI on Your Own PC?</td><td>uploaded</td><td class='n'>149</td><td class='n'>$0.98</td><td class='n'>$0.0381</td><td class='n'><b>$0.95</b></td></tr><tr><td>W02E03</td><td>Why Does AI Make Things Up?</td><td>rejected</td><td class='n'>0</td><td class='n'>$0.00</td><td class='n'>$0.0394</td><td class='n'><b>-$0.04</b></td></tr></table>
+<p class="muted">The chart shows finished videos (uploaded or rejected); videos still in review appear only in the table. AI cost = the video's own agent calls + an equal share of the week's planning and review calls.</p>
+<h2>Cost per agent this week</h2><svg class="chart" viewBox="0 0 520 300" width="100%" role="img" aria-label="Cost per agent bar chart"><text class="lbl" x="120" y="24" text-anchor="end">fact_checker</text><rect class="bar mag" x="130" y="10" width="300.0" height="18" rx="4" data-tip="fact_checker
+9 calls
+19,662 in / 150 out tokens
+Cost $0.0507"/><text class="val" x="436.0" y="24">$0.0507</text><text class="lbl" x="120" y="54" text-anchor="end">scriptwriter</text><rect class="bar mag" x="130" y="40" width="269.8" height="18" rx="4" data-tip="scriptwriter
+9 calls
+12,160 in / 1,515 out tokens
+Cost $0.0456"/><text class="val" x="405.8" y="54">$0.0456</text><text class="lbl" x="120" y="84" text-anchor="end">visual_designer</text><rect class="bar mag" x="130" y="70" width="40.2" height="18" rx="4" data-tip="visual_designer
+9 calls
+40,375 in / 1,308 out tokens
+Cost $0.0068"/><text class="val" x="176.2" y="84">$0.0068</text><text class="lbl" x="120" y="114" text-anchor="end">seo_metadata</text><rect class="bar mag" x="130" y="100" width="39.1" height="18" rx="4" data-tip="seo_metadata
+12 calls
+39,397 in / 1,157 out tokens
+Cost $0.0066"/><text class="val" x="175.1" y="114">$0.0066</text><text class="lbl" x="120" y="144" text-anchor="end">topic_strategist</text><rect class="bar mag" x="130" y="130" width="13.6" height="18" rx="4" data-tip="topic_strategist
+5 calls
+13,935 in / 341 out tokens
+Cost $0.0023"/><text class="val" x="149.6" y="144">$0.0023</text><text class="lbl" x="120" y="174" text-anchor="end">business_manager</text><rect class="bar mag" x="130" y="160" width="7.1" height="18" rx="4" data-tip="business_manager
+3 calls
+7,348 in / 163 out tokens
+Cost $0.0012"/><text class="val" x="143.1" y="174">$0.0012</text><text class="lbl" x="120" y="204" text-anchor="end">producer</text><rect class="bar mag" x="130" y="190" width="5.9" height="18" rx="4" data-tip="producer
+10 calls
+6,069 in / 155 out tokens
+Cost $0.0010"/><text class="val" x="141.9" y="204">$0.0010</text><text class="lbl" x="120" y="234" text-anchor="end">trend_researcher</text><rect class="bar mag" x="130" y="220" width="5.3" height="18" rx="4" data-tip="trend_researcher
+3 calls
+4,661 in / 382 out tokens
+Cost $0.0009"/><text class="val" x="141.3" y="234">$0.0009</text><text class="lbl" x="120" y="264" text-anchor="end">analytics</text><rect class="bar mag" x="130" y="250" width="3.6" height="18" rx="4" data-tip="analytics
+3 calls
+3,205 in / 180 out tokens
+Cost $0.0006"/><text class="val" x="139.6" y="264">$0.0006</text><line class="zero" x1="130" x2="130" y1="4" y2="280"/></svg>
+<table><tr><th>Agent</th><th class=n>Calls</th><th class=n>Input tokens</th><th class=n>Output tokens</th><th class=n>Cost</th></tr><tr><td>fact_checker</td><td class='n'>9</td><td class='n'>19,662</td><td class='n'>150</td><td class='n'>$0.0507</td></tr><tr><td>scriptwriter</td><td class='n'>9</td><td class='n'>12,160</td><td class='n'>1,515</td><td class='n'>$0.0456</td></tr><tr><td>visual_designer</td><td class='n'>9</td><td class='n'>40,375</td><td class='n'>1,308</td><td class='n'>$0.0068</td></tr><tr><td>seo_metadata</td><td class='n'>12</td><td class='n'>39,397</td><td class='n'>1,157</td><td class='n'>$0.0066</td></tr><tr><td>topic_strategist</td><td class='n'>5</td><td class='n'>13,935</td><td class='n'>341</td><td class='n'>$0.0023</td></tr><tr><td>business_manager</td><td class='n'>3</td><td class='n'>7,348</td><td class='n'>163</td><td class='n'>$0.0012</td></tr><tr><td>producer</td><td class='n'>10</td><td class='n'>6,069</td><td class='n'>155</td><td class='n'>$0.0010</td></tr><tr><td>trend_researcher</td><td class='n'>3</td><td class='n'>4,661</td><td class='n'>382</td><td class='n'>$0.0009</td></tr><tr><td>analytics</td><td class='n'>3</td><td class='n'>3,205</td><td class='n'>180</td><td class='n'>$0.0006</td></tr></table>
+<h2>What the Analytics agent found</h2><p>4 published video(s) analysed.</p><ul><li>Top video so far: W01E02 &#x27;RAG explained: how chatbots read your documents&#x27; with 270 views and CTR 4.8%.</li><li>Category ai_tools: $1.21 revenue per video (2 video(s)).</li><li>Category coding: $0.98 revenue per video (1 video(s)).</li><li>Category explainer: $0.94 revenue per video (1 video(s)).</li><li>Question titles CTR 5.8% vs plain titles 4.7%.</li><li>Average view percentage 54%. Short videos keep viewers to the end.</li></ul>
+<h2>Business Manager's plan for week 3</h2>
+<p>Week 2: 4 video(s) live, revenue to date $4.33, AI cost $0.31, profit $4.02.</p>
+<ul><li>Videos next week: <b>3</b></li>
+<li>Favor: ai_tools</li>
+<li>Avoid: none</li>
+<li>Title guidance: question titles get higher CTR</li><li>Budget changes: none</li></ul>
+<p><b>Why:</b> Keep 3 videos per week until more data comes in. Favor &#x27;ai_tools&#x27; because it earns the most profit per video. Analytics says: question titles get higher CTR.</p>
+<h2>Professor decisions this week</h2>
+<table><tr><th>Video</th><th>Rev</th><th>Decision</th><th>Notes</th><th>By</th></tr><tr><td>W02E01</td><td>r1</td><td>approved</td><td>Looks good.</td><td>SIMULATED professor (demo)</td></tr><tr><td>W02E02</td><td>r1</td><td>approved</td><td>Looks good.</td><td>SIMULATED professor (demo)</td></tr><tr><td>W02E03</td><td>r1</td><td>rejected</td><td>I already cover this topic in class this semester; skip it for now.</td><td>SIMULATED professor (demo)</td></tr></table>
+
+<div id="tip"></div>
+<script>
+(function(){const t=document.getElementById('tip');
+document.querySelectorAll('[data-tip]').forEach(el=>{
+ el.addEventListener('mousemove',e=>{t.textContent=el.dataset.tip;t.style.display='block';
+   t.style.left=(e.clientX+14)+'px';t.style.top=(e.clientY+10)+'px';});
+ el.addEventListener('mouseleave',()=>{t.style.display='none';});});})();
+</script>
+</body></html>

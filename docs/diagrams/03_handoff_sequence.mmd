@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    participant P as Producer
+    participant SW as Scriptwriter
+    participant FC as Fact-Checker
+    participant SEO as SEO / Metadata
+    participant VD as Visual Designer
+    participant DB as Database / tools
+    Note over P,VD: One production run for episode W01E01 (from the simulation log)
+    P->>DB: get_week_status()
+    P->>SW: handoff (transfer_to_scriptwriter)
+    SW->>DB: get_episode_brief()
+    SW->>DB: save_script(draft 1, 8 scenes)
+    SW->>FC: handoff
+    FC->>DB: get_script()
+    FC->>DB: save_fact_check(passed=false, 1 issue)
+    Note right of FC: "Embeddings capture the exact meaning<br/>of any sentence perfectly." is an absolute claim
+    FC->>SW: handoff back with the issue
+    SW->>DB: save_script(draft 2, fix applied)
+    SW->>FC: handoff
+    FC->>DB: save_fact_check(passed=true)
+    FC->>SEO: handoff
+    SEO->>DB: get_channel_insights(), save_metadata(3 titles, tags, chapters)
+    SEO->>VD: handoff
+    VD->>DB: save_visuals(thumbnail + 9 scene images)
+    VD-->>P: run ends with VD final output: "package ready for rendering and review"
+    Note over P,DB: Every model call above is priced and logged per agent and per episode

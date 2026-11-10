@@ -1,0 +1,87 @@
+1
+00:00:00,000 --> 00:00:02,793
+Why can a chatbot answer questions about a PDF
+
+2
+00:00:02,843 --> 00:00:04,339
+it has never seen before?
+
+3
+00:00:04,389 --> 00:00:06,873
+In the next few minutes I will explain it
+
+4
+00:00:06,923 --> 00:00:09,098
+the way I explain it to my students.
+
+5
+00:00:09,748 --> 00:00:12,707
+I teach this in my college classes, and this
+
+6
+00:00:12,757 --> 00:00:14,417
+is Professor Explains AI.
+
+7
+00:00:14,467 --> 00:00:15,648
+Let's get into it.
+
+8
+00:00:16,298 --> 00:00:19,201
+A model only knows what was in its training data.
+
+9
+00:00:19,251 --> 00:00:21,371
+Your company handbook was not in it.
+
+10
+00:00:22,021 --> 00:00:26,242
+Retrieval augmented generation searches your documents first and finds
+
+11
+00:00:26,292 --> 00:00:28,744
+the few passages that match the question.
+
+12
+00:00:29,394 --> 00:00:32,262
+Those passages are pasted into the prompt, and the
+
+13
+00:00:32,312 --> 00:00:34,597
+model writes an answer grounded in them.
+
+14
+00:00:35,247 --> 00:00:37,471
+Let me give you a real example from my
+
+15
+00:00:37,521 --> 00:00:41,061
+own classroom, where students tried this for the first time.
+
+16
+00:00:41,711 --> 00:00:42,853
+So, to recap.
+
+17
+00:00:42,903 --> 00:00:43,953
+The problem.
+
+18
+00:00:44,003 --> 00:00:45,329
+Retrieve first.
+
+19
+00:00:45,379 --> 00:00:46,613
+Then generate.
+
+20
+00:00:47,263 --> 00:00:50,274
+If this helped, subscribe, and tell me in the
+
+21
+00:00:50,324 --> 00:00:52,859
+comments what you want explained next.
+
+22
+00:00:52,909 --> 00:00:54,288
+I read every comment.

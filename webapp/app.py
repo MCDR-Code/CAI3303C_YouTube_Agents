@@ -22,7 +22,7 @@ from approval.gate import GateError, can_upload, record_decision
 from reports.charts import CHART_CSS, TOOLTIP_JS, diverging_bars, magnitude_bars
 from reports.profit import agent_costs, agent_costs_by_week, category_summary, profit_per_video, totals
 from reports.weekly import _agent_tip, _video_tip
-from tools.storage import Store
+from tools.storage import Store, abspath
 
 STATUS_ORDER = [
     ("pending_review", "Waiting for your review"),
@@ -121,9 +121,9 @@ def create_app(cfg=None) -> Flask:
     @app.route("/captions/<ep_id>.vtt")
     def captions(ep_id: str):
         ep = store.episode(ep_id)
-        if not ep or not ep.get("srt_path") or not Path(ep["srt_path"]).exists():
+        if not ep or not ep.get("srt_path") or not abspath(ep["srt_path"]).exists():
             abort(404)
-        srt = Path(ep["srt_path"]).read_text(encoding="utf-8")
+        srt = abspath(ep["srt_path"]).read_text(encoding="utf-8")
         vtt = "WEBVTT\n\n" + re.sub(r"(\d\d:\d\d:\d\d),(\d\d\d)", r"\1.\2", srt)
         return vtt, 200, {"Content-Type": "text/vtt"}
 
@@ -155,7 +155,9 @@ def create_app(cfg=None) -> Flask:
 
     @app.template_filter("rel")
     def rel(path: str) -> str:
-        return Path(os.path.relpath(path, cfg.root)).as_posix() if path else ""
+        if not path:
+            return ""
+        return Path(os.path.relpath(path, cfg.root)).as_posix() if Path(path).is_absolute() else path
 
     @app.template_filter("money")
     def money(v, d=2):

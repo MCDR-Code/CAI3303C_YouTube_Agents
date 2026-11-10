@@ -116,5 +116,5 @@ def close_week(cfg: Config, store: Store, week: int, last_sim_day: int | None = 
         channel_stats.fetch_real(store, cfg)
     _run(_state(cfg, store, week, "review_week"), f"Review week {week} and plan week {week + 1}.")
     path = write_weekly_report(cfg, store, week)
-    print(f"   weekly report: {path}")
+    print(f"   weekly report: {path.relative_to(cfg.root) if path.is_relative_to(cfg.root) else path}")
     return str(path)

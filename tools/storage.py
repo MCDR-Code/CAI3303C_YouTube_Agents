@@ -91,6 +91,25 @@ CREATE TABLE IF NOT EXISTS events (
 """
 
 
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def relpath(p: str | Path) -> str:
+    """Store paths relative to the project folder, so the database works on any machine."""
+    p = Path(p).resolve()
+    try:
+        return p.relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(p)          # outside the project (e.g. tests in a temp folder)
+
+
+def abspath(p: str | Path | None) -> Path | None:
+    if not p:
+        return None
+    p = Path(p)
+    return p if p.is_absolute() else ROOT / p
+
+
 def now() -> str:
     return datetime.now().isoformat(timespec="seconds")
 
