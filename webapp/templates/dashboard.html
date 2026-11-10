@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | {{ channel }}{% endblock %}
+{% block head %}
+<style>
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi{background:var(--surface-1);border:1px solid rgba(11,11,11,.08);border-radius:10px;padding:12px 14px}
+.kpi span{color:var(--text-secondary);font-size:13px} .kpi b{display:block;font-size:24px;margin-top:2px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+details summary{cursor:pointer;color:var(--text-secondary);font-size:13px;margin-top:8px}
+</style>
+{% endblock %}
+{% block body %}
+<h1>Dashboard</h1>
+{% if mode == 'mock' %}<p class="muted small">Mock mode: views and revenue are simulated. AI costs are estimated from real prompt sizes at the prices in config.yaml.</p>{% endif %}
+<div class="kpis">
+  <div class="kpi"><span>Revenue to date</span><b>{{ t.revenue_usd|money }}</b></div>
+  <div class="kpi"><span>AI cost (Prune)</span><b>{{ t.ai_cost_usd|money }}</b></div>
+  <div class="kpi"><span>Profit</span><b>{{ t.profit_usd|money }}</b></div>
+  <div class="kpi"><span>Published / made</span><b>{{ t.videos_published }} / {{ t.videos_made }}</b></div>
+  <div class="kpi"><span>Views</span><b>{{ '{:,}'.format(t.views) }}</b></div>
+</div>
+
+<h2>Profit per video <span class="muted small">(revenue minus AI cost; blue = profit, red = loss)</span></h2>
+<div class="card">{{ chart_profit|safe }}
+<details><summary>Table view</summary>
+<table><tr><th>Video</th><th>Title</th><th>Status</th><th class="n">Views</th><th class="n">Revenue</th><th class="n">AI cost (direct)</th><th class="n">AI cost (shared)</th><th class="n">Profit</th></tr>
+{% for v in vids %}<tr><td><a href="{{ url_for('review_detail', ep_id=v.episode_id) }}">{{ v.episode_id }}</a></td><td>{{ v.title }}</td><td>{{ v.status }}</td><td class="n">{{ '{:,}'.format(v.views) }}</td><td class="n">{{ v.revenue_usd|money }}</td><td class="n">{{ v.ai_cost_direct_usd|money(4) }}</td><td class="n">{{ v.ai_cost_shared_usd|money(4) }}</td><td class="n"><b>{{ v.profit_usd|money }}</b></td></tr>{% endfor %}
+</table></details></div>
+
+<div class="two">
+<div>
+<h2>Cost per agent <span class="muted small">(all weeks)</span></h2>
+<div class="card">{{ chart_agents|safe }}</div>
+</div>
+<div>
+<h2>Cost per agent by week</h2>
+<div class="card"><table><tr><th>Agent</th>{% for w in weeks %}<th class="n">Week {{ w }}</th>{% endfor %}<th class="n">Total</th></tr>
+{% for a in agents %}<tr><td>{{ a.agent }}</td>{% for w in weeks %}<td class="n">{{ (by_week[a.agent].get(w, 0))|money(4) }}</td>{% endfor %}<td class="n"><b>{{ a.cost_usd|money(4) }}</b></td></tr>{% endfor %}
+</table></div>
+<h2>Profit by category</h2>
+<div class="card"><table><tr><th>Category</th><th class="n">Videos</th><th class="n">Revenue</th><th class="n">AI cost</th><th class="n">Profit / video</th></tr>
+{% for c in cats %}<tr><td>{{ c.category }}</td><td class="n">{{ c.videos }}</td><td class="n">{{ c.revenue_usd|money }}</td><td class="n">{{ c.ai_cost_usd|money }}</td><td class="n"><b>{{ c.profit_per_video|money }}</b></td></tr>{% endfor %}
+</table></div>
+</div>
+</div>
+{% endblock %}
+{% block scripts %}{{ tooltip_js|safe }}{% endblock %}

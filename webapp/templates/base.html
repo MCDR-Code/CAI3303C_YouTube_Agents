@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ channel }}{% endblock %}</title>
+<style>
+{{ chart_css|safe }}
+:root{--navy:#0f1b2d;--teal:#2bb3a3;--amber:#f2a541}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f5f2;color:var(--text-primary)}
+header{background:var(--navy);color:#fff;padding:12px 28px;display:flex;align-items:center;gap:28px}
+header .brand{font-weight:700;font-size:17px}
+header .brand span{color:var(--teal)}
+header nav a{color:#c9d3df;text-decoration:none;margin-right:20px;font-weight:500}
+header nav a.on,header nav a:hover{color:#fff}
+.pill{background:var(--amber);color:#1b1300;border-radius:10px;padding:0 7px;font-size:12px;font-weight:700;margin-left:4px}
+.mode{margin-left:auto;font-size:12px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:5px;background:#3a2c00;color:var(--amber)}
+.mode.real{background:#0c3b1a;color:#7ee28f}
+main{max-width:1180px;margin:0 auto;padding:24px 28px 60px}
+h1{font-size:24px;margin:4px 0 16px} h2{font-size:17px;margin:28px 0 10px} h3{font-size:15px;margin:18px 0 6px}
+.card{background:var(--surface-1);border:1px solid rgba(11,11,11,.08);border-radius:10px;padding:16px 18px}
+.muted{color:var(--muted)} .small{font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{padding:7px 9px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top}
+th{color:var(--text-secondary);font-weight:600;font-size:13px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.flash{padding:9px 14px;border-radius:7px;margin-bottom:10px;font-weight:500}
+.flash.ok{background:#e3f4e3;color:#0b4d0b} .flash.err{background:#fbe3e3;color:#7a1414} .flash.info{background:#e6eef9;color:#1c3d6b}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#e8e8e4;color:#333}
+.badge.pending_review{background:#fff1cc;color:#5c4300} .badge.approved{background:#dff3df;color:#0b4d0b}
+.badge.uploaded{background:#e3ecfa;color:#173b72} .badge.rejected{background:#f9e0e0;color:#7a1414}
+.badge.changes_requested{background:#fde7d9;color:#7a3610}
+a{color:#1c5cab}
+</style>
+{% block head %}{% endblock %}
+</head>
+<body class="viz-root">
+<header>
+  <div class="brand">{{ channel }} <span>Agent Studio</span></div>
+  <nav>
+    <a href="{{ url_for('review_list') }}" class="{{ 'on' if request.path.startswith('/review') }}">Review{% if pending_count %}<span class="pill">{{ pending_count }}</span>{% endif %}</a>
+    <a href="{{ url_for('dashboard') }}" class="{{ 'on' if request.path.startswith('/dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('reports') }}" class="{{ 'on' if request.path.startswith('/reports') }}">Weekly reports</a>
+  </nav>
+  <div class="mode {{ mode }}">{{ mode|upper }} MODE</div>
+</header>
+<main>
+{% for cat, msg in get_flashed_messages(with_categories=true) %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}
+{% block body %}{% endblock %}
+</main>
+{% block scripts %}{% endblock %}
+</body>
+</html>

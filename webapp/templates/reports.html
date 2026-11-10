@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Weekly reports | {{ channel }}{% endblock %}
+{% block body %}
+<h1>Weekly reports</h1>
+<div class="card"><table><tr><th>Week</th><th>Starts</th><th>Report</th></tr>
+{% for r in rows %}<tr><td>Week {{ r.week }}</td><td>{{ r.start_date }}</td>
+<td>{% if r.report_path %}<a href="{{ url_for('report', week=r.week) }}">Open report</a>{% else %}<span class="muted">not written yet</span>{% endif %}</td></tr>
+{% else %}<tr><td colspan="3" class="muted">No weeks yet.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

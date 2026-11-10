@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}{{ ep.id }} review | {{ channel }}{% endblock %}
+{% block head %}
+<style>
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+video{width:100%;border-radius:10px;background:#000;display:block}
+.decide{position:sticky;top:16px}
+.decide textarea{width:100%;min-height:90px;font:inherit;padding:8px;border-radius:7px;border:1px solid #ccc}
+.decide input{width:100%;font:inherit;padding:7px;border-radius:7px;border:1px solid #ccc}
+.btns{display:grid;gap:8px;margin-top:10px}
+.btns button{font:inherit;font-weight:600;padding:10px;border-radius:8px;border:0;cursor:pointer}
+.b-ok{background:#0b7a35;color:#fff} .b-ch{background:#f2a541;color:#1b1300} .b-no{background:#fff;color:#a01818;border:1.5px solid #a01818!important}
+.b-up{background:#1c5cab;color:#fff}
+.scene{border-left:3px solid var(--grid);padding:4px 0 4px 12px;margin:10px 0}
+.scene .h{font-weight:600}
+.note{background:#fff4d6;color:#5a4300;border-radius:6px;padding:4px 8px;font-size:13px;margin-top:4px}
+.issue{background:#fbe3e3;color:#7a1414;border-radius:6px;padding:6px 9px;font-size:13px;margin:4px 0}
+.pass{background:#e3f4e3;color:#0b4d0b;border-radius:6px;padding:6px 9px;font-size:13px;margin:4px 0}
+.titles li:first-child{font-weight:600}
+.desc{white-space:pre-wrap;font-size:13px;background:#f6f6f3;border-radius:7px;padding:10px;max-height:220px;overflow:auto}
+.tags span{display:inline-block;background:#eceee9;border-radius:9px;padding:1px 8px;margin:2px;font-size:12px}
+.thumb{width:100%;border-radius:8px;margin-top:6px}
+</style>
+{% endblock %}
+{% block body %}
+<p class="small"><a href="{{ url_for('review_list') }}">&larr; All videos</a></p>
+<h1>{{ ep.id }}: {{ ep.metadata.titles[0] if ep.metadata else ep.topic }}</h1>
+<p><span class="badge {{ ep.status }}">{{ ep.status.replace('_',' ') }}</span>
+ <span class="muted small">&nbsp; week {{ ep.week }} &middot; revision {{ ep.revision }} &middot; category {{ ep.category }}
+ {% if ep.duration_sec %}&middot; {{ (ep.duration_sec // 60)|int }}:{{ '%02d' % (ep.duration_sec % 60)|int }}{% endif %}
+ &middot; AI cost {{ total_cost|money(4) }}</span></p>
+
+<div class="cols">
+<div>
+  {% if ep.video_path %}
+  <video controls preload="metadata" poster="{{ url_for('media', rel=ep.thumbnail_path|rel) }}">
+    <source src="{{ url_for('media', rel=ep.video_path|rel) }}" type="video/mp4">
+    <track kind="captions" src="{{ url_for('captions', ep_id=ep.id) }}" srclang="en" label="English">
+  </video>
+  {% endif %}
+
+  <h2>Script (draft {{ ep.script.draft }}, {{ ep.script.word_count }} words)</h2>
+  {% for sc in ep.script.scenes %}
+  <div class="scene"><div class="h">{{ loop.index0 }}. {{ sc.heading }} <span class="muted small">[on screen: {{ sc.on_screen_text }}]</span></div>
+    <div>{{ sc.narration }}</div>
+    {% if sc.professor_note %}<div class="note">Your spot: {{ sc.professor_note }}</div>{% endif %}</div>
+  {% endfor %}
+
+  <h2>Fact-check</h2>
+  {% set fc = ep.factcheck or {} %}
+  {% for r in fc.get('rounds', []) %}
+    {% if r.passed %}<div class="pass">Draft {{ r.draft }}: passed</div>
+    {% else %}{% for i in r.issues %}<div class="issue"><b>Draft {{ r.draft }}, scene {{ i.scene_index }}:</b> "{{ i.claim }}" &mdash; {{ i.problem }}<br><b>Fix:</b> {{ i.suggested_fix }}</div>{% endfor %}{% endif %}
+  {% endfor %}
+  {% if fc.get('rounds') and not fc.get('passed') %}<div class="issue"><b>Open issues remain.</b> The fact-checker hit its revision limit; please check these claims.</div>{% endif %}
+
+  {% if ep.metadata %}
+  <h2>Titles (best first)</h2><ol class="titles">{% for t in ep.metadata.titles %}<li>{{ t }}</li>{% endfor %}</ol>
+  <h3>Description</h3><div class="desc">{{ ep.metadata.description }}</div>
+  <h3>Tags</h3><div class="tags">{% for t in ep.metadata.tags %}<span>{{ t }}</span>{% endfor %}</div>
+  <h3>Pinned comment</h3><p>{{ ep.metadata.pinned_comment }}</p>
+  {% endif %}
+
+  <h2>AI cost for this video (direct)</h2>
+  <table><tr><th>Agent</th><th class="n">Calls</th><th class="n">Cost</th></tr>
+  {% for c in costs %}<tr><td>{{ c.agent }}</td><td class="n">{{ c.calls }}</td><td class="n">{{ c.cost|money(4) }}</td></tr>{% endfor %}
+  <tr><td><b>Total</b></td><td></td><td class="n"><b>{{ total_cost|money(4) }}</b></td></tr></table>
+</div>
+
+<div class="decide">
+  <div class="card">
+  {% if ep.status == 'pending_review' %}
+    <h3 style="margin-top:0">Your decision</h3>
+    <form method="post" action="{{ url_for('decide', ep_id=ep.id) }}">
+      <label class="small muted">Notes (required for "Request changes")</label>
+      <textarea name="notes" placeholder="e.g. Shorter intro, and add my example about the chess club."></textarea>
+      <label class="small muted">Your name</label>
+      <input name="who" value="Professor">
+      <div class="btns">
+        <button class="b-ok" name="decision" value="approved">Approve</button>
+        <button class="b-ch" name="decision" value="changes_requested">Request changes</button>
+        <button class="b-no" name="decision" value="rejected">Reject</button>
+      </div>
+    </form>
+  {% elif ep.status == 'approved' %}
+    <h3 style="margin-top:0">Approved</h3>
+    <p class="small">{{ why }}</p>
+    <form method="post" action="{{ url_for('upload', ep_id=ep.id) }}">
+      <div class="btns"><button class="b-up" {{ '' if can_up else 'disabled' }}>Upload as PRIVATE</button></div>
+    </form>
+    <p class="small muted">After upload, make it public yourself in YouTube Studio.</p>
+  {% elif ep.status == 'uploaded' %}
+    <h3 style="margin-top:0">Uploaded</h3>
+    <p class="small">Video ID <code>{{ upload.youtube_id }}</code><br>Privacy: <b>{{ upload.privacy }}</b> ({{ upload.backend }})</p>
+  {% else %}
+    <h3 style="margin-top:0">{{ ep.status.replace('_',' ')|capitalize }}</h3>
+    {% if ep.review_notes and ep.status == 'changes_requested' %}<p class="small">Your notes: {{ ep.review_notes }}</p>{% endif %}
+  {% endif %}
+    <h3>Thumbnail</h3>
+    {% if ep.thumbnail_path %}<img class="thumb" src="{{ url_for('media', rel=ep.thumbnail_path|rel) }}" alt="Thumbnail">{% endif %}
+    <h3>Decision history</h3>
+    {% for d in decisions %}<p class="small"><b>r{{ d.revision }} {{ d.decision.replace('_',' ') }}</b> by {{ d.decided_by }}<br><span class="muted">{{ d.decided_at }}</span>{% if d.notes %}<br>"{{ d.notes }}"{% endif %}</p>
+    {% else %}<p class="small muted">No decisions yet.</p>{% endfor %}
+  </div>
+</div>
+</div>
+{% endblock %}
