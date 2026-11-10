@@ -55,7 +55,7 @@ def cmd_serve(cfg, store, args):
     from webapp.app import create_app
 
     print("Review page:  http://127.0.0.1:%d/review\nDashboard:    http://127.0.0.1:%d/dashboard" % (args.port, args.port))
-    create_app(cfg).run(host="127.0.0.1", port=args.port, debug=False)
+    create_app(cfg).run(host=args.host, port=args.port, debug=False)
 
 
 def cmd_status(cfg, store, args):
@@ -96,7 +96,7 @@ def main(argv=None):
     sub.add_parser("revise")
     sub.add_parser("publish")
     c = sub.add_parser("close-week"); c.add_argument("--week", type=int)
-    s = sub.add_parser("serve"); s.add_argument("--port", type=int, default=5000)
+    s = sub.add_parser("serve"); s.add_argument("--port", type=int, default=5000); s.add_argument("--host", default="127.0.0.1", help="use 0.0.0.0 to allow other computers to connect")
     sub.add_parser("status")
     sm = sub.add_parser("simulate"); sm.add_argument("--weeks", type=int, default=2)
     sm.add_argument("--fresh", action="store_true", help="delete the database and output first")
