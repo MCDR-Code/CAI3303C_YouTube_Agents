@@ -1,0 +1,117 @@
+Mode: MOCK  backends: {'llm': 'mock', 'channel_stats': 'mock', 'images': 'mock', 'tts': 'offline', 'upload': 'mock'}
+
+== Week 1: planning ==
+   [producer] Week 1, stage 'plan'
+   [trend_researcher] search_trends('AI explained for beginners') -> 12 topics (mock data)
+   [trend_researcher] saved 6 topic findings
+   [topic_strategist] created episodes W01E01, W01E02
+   agents used: producer -> trend_researcher -> topic_strategist
+
+== W01E01: production (Embeddings: how computers understand meaning) ==
+   [producer] Week 1, stage 'produce', episode W01E01
+   [scriptwriter] saved draft 1: 8 scenes, 153 words
+   [fact_checker] draft 1: 1 issue(s)
+   [scriptwriter] saved draft 2: 9 scenes, 156 words
+   [fact_checker] draft 2: PASSED
+   [seo_metadata] title: "Embeddings: how computers understand meaning" (+2 options), 7 tags
+   [visual_designer] thumbnail 'MEANING = MATH' + 9 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W01E01 r1: 9 scenes
+   video ready: W01E01_r1.mp4 (59s, voice: espeak-ng) -> waiting for professor review
+
+== W01E02: production (RAG explained: how chatbots read your documents) ==
+   [producer] Week 1, stage 'produce', episode W01E02
+   [scriptwriter] saved draft 1: 8 scenes, 154 words
+   [fact_checker] draft 1: PASSED
+   [seo_metadata] title: "RAG explained: how chatbots read your documents" (+2 options), 7 tags
+   [visual_designer] thumbnail 'OPEN BOOK AI' + 8 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W01E02 r1: 8 scenes
+   video ready: W01E02_r1.mp4 (58s, voice: espeak-ng) -> waiting for professor review
+
+== Week 1: professor review (SIMULATED for the demo) ==
+   SIMULATED professor (demo): W01E01 r1 -> approved (Looks good.)
+   SIMULATED professor (demo): W01E02 r1 -> changes_requested (Make it shorter and add a real example from my classroom.)
+
+== W01E02: revision 2 (professor notes: 'Make it shorter and add a real example from my classroom.') ==
+   [producer] Week 1, stage 'revise', episode W01E02
+   [scriptwriter] saved draft 2: 8 scenes, 144 words
+   [fact_checker] draft 2: PASSED
+   [seo_metadata] title: "RAG explained: how chatbots read your documents" (+2 options), 7 tags
+   [visual_designer] thumbnail 'OPEN BOOK AI' + 8 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W01E02 r2: 8 scenes
+   video ready: W01E02_r2.mp4 (55s, voice: espeak-ng) -> waiting for professor review
+
+== Week 1: professor review of revisions (SIMULATED) ==
+   SIMULATED professor (demo): W01E02 r2 -> approved (Looks good.)
+
+== Week 1: publish (private) ==
+   upload W01E01: {'ok': True, 'video_id': 'MOCK-9051156a4d9', 'privacy': 'private'}
+   upload W01E02: {'ok': True, 'video_id': 'MOCK-b673fb6260b', 'privacy': 'private'}
+
+== Week 1: analytics, profit report and next-week plan ==
+   simulated 6 video-days of stats (through sim day 6)
+   [producer] Week 1, stage 'review_week'
+   [analytics] read stats for 2 published videos (mock data)
+   [analytics] insights saved (best category: ai_tools)
+   [business_manager] plan for week 2: 3 videos, favor ['ai_tools']
+   agents used: producer -> analytics -> business_manager
+   weekly report: /home/claude/YouTube_Agent_System/output/reports/week_01.html
+
+== Week 2: planning ==
+   [producer] Week 2, stage 'plan'
+   [trend_researcher] search_trends('AI explained for beginners') -> 12 topics (mock data)
+   [trend_researcher] saved 6 topic findings
+   [topic_strategist] created episodes W02E01, W02E02, W02E03
+   agents used: producer -> trend_researcher -> topic_strategist
+
+== W02E01: production (What is an AI agent, really?) ==
+   [producer] Week 2, stage 'produce', episode W02E01
+   [scriptwriter] saved draft 1: 8 scenes, 158 words
+   [fact_checker] draft 1: PASSED
+   [seo_metadata] title: "What Is an AI Agent, Really?" (+2 options), 7 tags
+   [visual_designer] thumbnail 'AGENTS, REALLY?' + 8 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W02E01 r1: 8 scenes
+   video ready: W02E01_r1.mp4 (59s, voice: espeak-ng) -> waiting for professor review
+
+== W02E02: production (Run an AI model on your own computer) ==
+   [producer] Week 2, stage 'produce', episode W02E02
+   [scriptwriter] saved draft 1: 8 scenes, 140 words
+   [fact_checker] draft 1: PASSED
+   [seo_metadata] title: "Can You Run AI on Your Own PC?" (+2 options), 7 tags
+   [visual_designer] thumbnail 'AI ON YOUR PC' + 8 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W02E02 r1: 8 scenes
+   video ready: W02E02_r1.mp4 (53s, voice: espeak-ng) -> waiting for professor review
+
+== W02E03: production (Why AI makes things up (hallucinations)) ==
+   [producer] Week 2, stage 'produce', episode W02E03
+   [scriptwriter] saved draft 1: 8 scenes, 161 words
+   [fact_checker] draft 1: PASSED
+   [seo_metadata] title: "Why Does AI Make Things Up?" (+2 options), 7 tags
+   [visual_designer] thumbnail 'AI LIES?' + 8 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W02E03 r1: 8 scenes
+   video ready: W02E03_r1.mp4 (59s, voice: espeak-ng) -> waiting for professor review
+
+== Week 2: professor review (SIMULATED for the demo) ==
+   SIMULATED professor (demo): W02E01 r1 -> approved (Looks good.)
+   SIMULATED professor (demo): W02E02 r1 -> approved (Looks good.)
+   SIMULATED professor (demo): W02E03 r1 -> rejected (I already cover this topic in class this semester; skip it for now.)
+
+== Week 2: publish (private) ==
+   upload W02E01: {'ok': True, 'video_id': 'MOCK-a215c319c24', 'privacy': 'private'}
+   upload W02E02: {'ok': True, 'video_id': 'MOCK-95def5c18d8', 'privacy': 'private'}
+
+== Week 2: analytics, profit report and next-week plan ==
+   simulated 20 video-days of stats (through sim day 13)
+   [producer] Week 2, stage 'review_week'
+   [analytics] read stats for 4 published videos (mock data)
+   [analytics] insights saved (best category: ai_tools)
+   [business_manager] plan for week 3: 3 videos, favor ['ai_tools']
+   agents used: producer -> analytics -> business_manager
+   weekly report: /home/claude/YouTube_Agent_System/output/reports/week_02.html
+
+Done. Run `python main.py serve` to see the review page and dashboard.

@@ -105,7 +105,8 @@ def to_html(d: dict, mode: str) -> str:
     decisions = "".join(f"<tr><td>{x['episode_id']}</td><td>r{x['revision']}</td><td>{x['decision']}</td>"
                         f"<td>{escape(x['notes'] or '')}</td><td>{escape(x['decided_by'])}</td></tr>"
                         for x in d["decisions"])
-    chart_v = diverging_bars(d["videos"], "episode_id", "profit_usd", _video_tip)
+    chart_v = diverging_bars([v for v in d["videos"] if v["status"] in ("uploaded", "rejected")],
+                             "episode_id", "profit_usd", _video_tip)
     chart_a = magnitude_bars(d["agents_week"], "agent", "cost_usd", _agent_tip)
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8"><title>Week {d['week']} report</title>
 <style>{CHART_CSS}
@@ -126,7 +127,7 @@ td.n,th.n{{text-align:right;font-variant-numeric:tabular-nums}} .muted{{color:va
 <div class="kpi"><span>Views</span><b>{t['views']:,}</b></div></div>
 <h2>Profit per video</h2>{chart_v}
 <table><tr><th>Video</th><th>Title</th><th>Status</th><th class=n>Views</th><th class=n>Revenue</th><th class=n>AI cost</th><th class=n>Profit</th></tr>{rows}</table>
-<p class="muted">AI cost = the video's own agent calls + an equal share of the week's planning and review calls.</p>
+<p class="muted">The chart shows finished videos (uploaded or rejected); videos still in review appear only in the table. AI cost = the video's own agent calls + an equal share of the week's planning and review calls.</p>
 <h2>Cost per agent this week</h2>{chart_a}
 <table><tr><th>Agent</th><th class=n>Calls</th><th class=n>Input tokens</th><th class=n>Output tokens</th><th class=n>Cost</th></tr>{arows}</table>
 <h2>What the Analytics agent found</h2><p>{escape(ins.get('summary', ''))}</p><ul>{findings}</ul>

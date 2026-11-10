@@ -21,7 +21,7 @@ def _money(v: float, digits: int = 2) -> str:
 
 
 def diverging_bars(rows: list[dict], label_key: str, value_key: str, tip_fn, width: int = 760,
-                   label_w: int = 250) -> str:
+                   label_w: int = 80) -> str:
     """Horizontal bars around a zero line (profit/loss)."""
     if not rows:
         return "<p class='muted'>No data yet.</p>"
@@ -43,7 +43,8 @@ def diverging_bars(rows: list[dict], label_key: str, value_key: str, tip_fn, wid
         parts.append(f'<text class="lbl" x="{label_w}" y="{y + BAR_H - 4}" text-anchor="end">{label}</text>')
         parts.append(f'<rect class="bar {cls}" x="{left:.1f}" y="{y}" width="{w:.1f}" height="{BAR_H}" rx="4" '
                      f'data-tip="{escape(tip_fn(r))}"/>')
-        tx, anchor = (x1 + 6, "start") if v >= 0 else (x1 - 6, "end")
+        # value label sits on the open side of the zero line, so it never hits the row label
+        tx, anchor = (x1 + 6, "start") if v >= 0 else (x0 + 6, "start")
         parts.append(f'<text class="val" x="{tx:.1f}" y="{y + BAR_H - 4}" text-anchor="{anchor}">{_money(v)}</text>')
     parts.append(f'<line class="zero" x1="{x0:.1f}" x2="{x0:.1f}" y1="4" y2="{h - 20}"/>')
     parts.append(f'<text class="axis" x="{x0:.1f}" y="{h - 4}" text-anchor="middle">$0</text>')
@@ -51,8 +52,8 @@ def diverging_bars(rows: list[dict], label_key: str, value_key: str, tip_fn, wid
     return "".join(parts)
 
 
-def magnitude_bars(rows: list[dict], label_key: str, value_key: str, tip_fn, width: int = 760,
-                   label_w: int = 170, digits: int = 4) -> str:
+def magnitude_bars(rows: list[dict], label_key: str, value_key: str, tip_fn, width: int = 520,
+                   label_w: int = 120, digits: int = 4) -> str:
     """Horizontal bars from zero, one hue (cost)."""
     if not rows:
         return "<p class='muted'>No data yet.</p>"

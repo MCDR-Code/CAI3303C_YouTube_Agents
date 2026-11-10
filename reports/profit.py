@@ -53,8 +53,11 @@ def agent_costs_by_week(store: Store) -> dict[str, dict[int, float]]:
 
 
 def category_summary(store: Store) -> list[dict]:
+    """Finished videos only (uploaded or rejected); videos still in review have no outcome yet."""
     rows: dict[str, dict] = {}
     for v in profit_per_video(store):
+        if v["status"] not in ("uploaded", "rejected"):
+            continue
         c = rows.setdefault(v["category"], {"category": v["category"], "videos": 0, "views": 0,
                                             "revenue_usd": 0.0, "ai_cost_usd": 0.0, "profit_usd": 0.0})
         c["videos"] += 1

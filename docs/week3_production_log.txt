@@ -1,0 +1,44 @@
+Mode: MOCK  backends: {'llm': 'mock', 'channel_stats': 'mock', 'images': 'mock', 'tts': 'offline', 'upload': 'mock'}
+
+== Week 3: planning ==
+   [producer] Week 3, stage 'plan'
+   [trend_researcher] search_trends('AI explained for beginners') -> 12 topics (mock data)
+   [trend_researcher] saved 6 topic findings
+   [topic_strategist] created episodes W03E01, W03E02, W03E03
+   agents used: producer -> trend_researcher -> topic_strategist
+
+== W03E01: production (AI in the classroom: cheating or learning?) ==
+   [producer] Week 3, stage 'produce', episode W03E01
+   [scriptwriter] saved draft 1: 8 scenes, 160 words
+   [fact_checker] draft 1: 1 issue(s)
+   [scriptwriter] saved draft 2: 9 scenes, 160 words
+   [fact_checker] draft 2: PASSED
+   [seo_metadata] title: "Is Using AI in Class Cheating?" (+2 options), 7 tags
+   [visual_designer] thumbnail 'CHEATING?' + 9 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W03E01 r1: 9 scenes
+   video ready: W03E01_r1.mp4 (62s, voice: espeak-ng) -> waiting for professor review
+
+== W03E02: production (Prompt engineering in five minutes) ==
+   [producer] Week 3, stage 'produce', episode W03E02
+   [scriptwriter] saved draft 1: 8 scenes, 164 words
+   [fact_checker] draft 1: 1 issue(s)
+   [scriptwriter] saved draft 2: 9 scenes, 172 words
+   [fact_checker] draft 2: PASSED
+   [seo_metadata] title: "Why Do Some Prompts Work So Much Better?" (+2 options), 7 tags
+   [visual_designer] thumbnail 'BETTER PROMPTS' + 9 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W03E02 r1: 9 scenes
+   video ready: W03E02_r1.mp4 (60s, voice: espeak-ng) -> waiting for professor review
+
+== W03E03: production (Your first Python program that uses AI) ==
+   [producer] Week 3, stage 'produce', episode W03E03
+   [scriptwriter] saved draft 1: 8 scenes, 152 words
+   [fact_checker] draft 1: PASSED
+   [seo_metadata] title: "Can You Call AI in 10 Lines of Python?" (+2 options), 7 tags
+   [visual_designer] thumbnail '10 LINES' + 8 scene images (mock)
+   agents used: producer -> scriptwriter -> fact_checker -> seo_metadata -> visual_designer
+   rendering W03E03 r1: 8 scenes
+   video ready: W03E03_r1.mp4 (56s, voice: espeak-ng) -> waiting for professor review
+
+Week 3: 3 video(s) are waiting for the professor. Run: python main.py serve

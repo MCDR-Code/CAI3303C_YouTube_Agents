@@ -136,7 +136,8 @@ def create_app(cfg=None) -> Flask:
         return render_template(
             "dashboard.html", t=totals(store), vids=vids, agents=agents, weeks=weeks, by_week=by_week,
             cats=category_summary(store),
-            chart_profit=diverging_bars(vids, "episode_id", "profit_usd", _video_tip),
+            chart_profit=diverging_bars([v for v in vids if v["status"] in ("uploaded", "rejected")],
+                                        "episode_id", "profit_usd", _video_tip),
             chart_agents=magnitude_bars(agents, "agent", "cost_usd", _agent_tip),
             tooltip_js=TOOLTIP_JS)
 
