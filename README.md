@@ -38,20 +38,103 @@ Class project for CAI3303C Natural Language Processing, Miami Dade College.
 
 **Profit per video** = revenue to date − (the video's own AI calls + an equal share of the week's planning and review calls). A rejected video earns $0, so its AI cost counts as a loss. The numbers come from the database, never from an LLM.
 
-## Quick start (Windows)
+## Getting started (Windows)
+
+These steps take a teammate from nothing to the system running in mock mode, which is free and needs no keys.
+
+### 1. Check what you have
+
+Open PowerShell and run:
 
 ```powershell
-cd G:\1MDC_Education\CAI3303C_NaturalLang\01_Assignments\YouTube_Agent_System
-py -3.11 -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-winget install Gyan.FFmpeg        # once; then open a new terminal so ffmpeg is on PATH
-
-python main.py simulate --weeks 2 --fresh   # two fake weeks, about 2 minutes
-python main.py serve                        # http://127.0.0.1:5000
+py --list          # needs Python 3.11 or 3.12
+git --version
+ffmpeg -version
 ```
 
-In mock mode no `.env` is needed. The offline voice uses Windows' built-in SAPI voices through `pyttsx3`.
+Install anything that's missing, then close PowerShell and open a new window:
+
+```powershell
+winget install Python.Python.3.12
+winget install Git.Git
+winget install Gyan.FFmpeg
+```
+
+### 2. Get the code
+
+```powershell
+cd <the folder where you keep your class work>
+git clone https://github.com/MCDR-Code/CAI3303C_YouTube_Agents.git
+cd CAI3303C_YouTube_Agents
+```
+
+### 3. Create and turn on the virtual environment
+
+Use the Python version that `py --list` showed, for example 3.12:
+
+```powershell
+py -3.12 -m venv venv
+.\venv\Scripts\Activate.ps1
+```
+
+You should now see `(venv)` at the start of the line. Type the `.\` at the start of the second command.
+
+If it says running scripts is disabled, run this once, then run the second command again:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+### 4. Install the packages
+
+```powershell
+pip install -r requirements.txt
+```
+
+### 5. Run two simulated weeks
+
+```powershell
+python main.py simulate --weeks 2 --fresh
+```
+
+This takes about 2 minutes. The agents plan, write, fact-check and render the videos, a simulated professor approves or requests changes, and the business agents write the weekly reports.
+
+### 6. Open the review page and dashboard
+
+```powershell
+python main.py serve
+```
+
+Open http://127.0.0.1:5000 in your browser. Press Ctrl+C in PowerShell to stop it.
+
+### 7. Optional: run the tests
+
+```powershell
+pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+### Next time
+
+You only need to go into the folder, turn the environment back on, and run a command:
+
+```powershell
+cd CAI3303C_YouTube_Agents
+.\venv\Scripts\Activate.ps1
+python main.py serve
+```
+
+### If something goes wrong
+
+| Message | Fix |
+|---|---|
+| `The module 'venv' could not be loaded` | Step 3 didn't run, or the `.\` is missing. Run `py -3.12 -m venv venv`, then `.\venv\Scripts\Activate.ps1` |
+| `py` is not recognized | Install Python (step 1), and open a new PowerShell window |
+| `No suitable Python runtime found` | Use a version that `py --list` shows, for example `py -3.12` |
+| `ffmpeg` not found | Install it (step 1), and open a new PowerShell window |
+| `running scripts is disabled` | Run the `Set-ExecutionPolicy` line in step 3 |
+
+No `.env` file is needed in mock mode. Mock mode uses Windows' built-in voices for the narration.
 
 ## Commands
 
